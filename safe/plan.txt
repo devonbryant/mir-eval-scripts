@@ -1,0 +1,3 @@
+mfcc: MFCC
+flux: SpectralFlux
+shape: SpectralShape
