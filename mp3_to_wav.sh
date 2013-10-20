@@ -5,6 +5,6 @@
 find . -type f -name "*.mp3" -exec sh -c '
   for f in "$@"
   do
-	mpg123 -w "${f%.mp3}.wav" "$f"
+	mpg123 -r 44100 --stereo -b 3072 -w "${f%.mp3}.wav" "$f"
   done
 ' _ {} +
