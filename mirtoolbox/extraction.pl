@@ -3,6 +3,7 @@
 ##
 use strict;
 use File::Find;
+use File::Path qw(remove_tree);
 use Time::HiRes qw( usleep gettimeofday tv_interval );
 use Cwd 'abs_path';
 use Getopt::Long;
@@ -22,6 +23,9 @@ sub validate {
 		die("Required parameter ($name) not specified")
 	}
 }
+
+# clear out the output dir
+remove_tree($out_dir, {keep_root=>1});
 
 # start timing
 my $start = [gettimeofday];

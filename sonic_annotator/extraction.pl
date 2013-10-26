@@ -3,6 +3,7 @@
 ##
 use strict;
 use File::Find;
+use File::Path qw(remove_tree);
 use Time::HiRes qw( usleep gettimeofday tv_interval );
 use Cwd 'abs_path';
 use Getopt::Long;
@@ -22,6 +23,9 @@ sub validate {
 		die("Required parameter ($name) not specified")
 	}
 }
+
+# clear out the output dir
+remove_tree($out_dir, {keep_root=>1});
 
 # start timing
 my $start = [gettimeofday];
@@ -43,7 +47,7 @@ my $plan = abs_path("plan.n3");
 # path to sonic-annotator
 my $sonic_annotator = abs_path("../../../resources/mir/sonic-annotator-1.0-osx-x86_64/sonic-annotator");
 
-my $ret = system("$sonic_annotator -t \"$plan\" -w csv --csv-basedir \"$out_dir\" -r \"$in_dir\"");
+my $ret = system("$sonic_annotator -t \"$plan\" -w csv --csv-force --csv-basedir \"$out_dir\" -r \"$in_dir\"");
 if ($ret) { exit -1; }
 
 my $elapsed = tv_interval($start);
